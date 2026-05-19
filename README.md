@@ -121,11 +121,7 @@ group‑activity‑recognition‑gnn/
 
 2. **Prepare the dataset**
 
-   There are two ways to populate the dataset, depending on whether you have access to the real surveillance videos or simply want to try out the pipeline:
-
-   **a. Using your own videos**
-
-   Follow these high‑level steps to generate skeleton data from raw videos:
+   Follow these high‑level steps to generate the skeleton data:
 
    ```bash
    # 1. Run pose estimation to extract skeletons
@@ -139,16 +135,6 @@ group‑activity‑recognition‑gnn/
    ```
 
    After running the last command, the processed data will be placed under a `data/playground` directory with `.npy` and `.pkl` files ready for training.
-
-   **b. Creating a dummy dataset for demonstration**
-
-   If you do not have access to the raw surveillance data but still wish to explore the repository, a dummy dataset generator is provided.  Run the following script from the repository root to create a small synthetic dataset under `data/raw/playground_dataset`:
-
-   ```bash
-   python scripts/generate_dummy_dataset.py
-   ```
-
-   The script will create three sample skeleton files, a simple `annotations_raw.txt`, a dummy `objects.yaml` and a corresponding `annotations.pkl`.  These files allow the rest of the pipeline to run without external dependencies.  Keep in mind that this synthetic dataset is purely for demonstration and does not contain meaningful human poses or labels.
 
 3. **Train the model**
 
