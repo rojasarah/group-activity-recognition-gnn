@@ -8,10 +8,6 @@
     location:
     - 0.4
     - 0.2
-  - id: climbing_hill
-    location:
-    - 0.7
-    - 0.8
 - camera: 2
   objects:
   - id: bench

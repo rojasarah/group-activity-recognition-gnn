@@ -1,22 +1,14 @@
-# Configuration file for generating playground graph data.
-# Replace the values below with paths to your raw videos, annotations and output folders.
-
+# Demo data-generation configuration for the portfolio version of the MP-GCN adaptation.
 dataset_root_folder: data/raw/playground_dataset
 out_folder: data/playground
 
 reader:
-  # Number of joints per skeleton; adjust if using a different pose model
   num_joint: 17
-  # Maximum number of people to consider in each frame
   max_person: 6
 
 graph:
-  # Type of graph connectivity (e.g. 'spatial_temporal', 'disconnected', etc.)
   layout: openpose
-  # ... other graph parameters
 
 augmentation:
-  # Whether to perform random temporal cropping and flipping
-  random_rot: False
-  random_temporal: True
-  # ... other augmentation settings
+  random_rot: false
+  random_temporal: true

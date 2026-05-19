@@ -1,7 +1,8 @@
-torch>=1.11.0
-pyyaml
 numpy
-fvcore
+pyyaml
 tqdm
-tensorboardX
 ultralytics
+torch>=1.11.0
+fvcore
+tensorboardX
+matplotlib

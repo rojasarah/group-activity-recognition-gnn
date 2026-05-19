@@ -1,17 +1,13 @@
-# This is a placeholder configuration for the MP‑GCN model.
-# Copy the contents of the original MPG‑CN configuration here and adjust
-# paths and hyperparameters for your own dataset.
+# Demo training configuration for the portfolio version of the MP-GCN adaptation.
+# This file is intentionally lightweight. It supports the runnable demo in main.py.
+dataset_root_folder: data/raw/playground_dataset
+out_folder: data/playground
 
 model:
   name: MP_GCN
-  # ... add the rest of the model parameters here
+  num_classes: 2
 
 training:
-  batch_size: 32
-  epochs: 100
-  # ... add other training parameters (optimizer, scheduler, etc.)
-
-data:
-  data_path: /path/to/your/data/playground
-  num_classes: 2
-  # ... additional data settings
+  batch_size: 2
+  epochs: 1
+  mode: demo

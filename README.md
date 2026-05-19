@@ -1,168 +1,165 @@
-# Group Activity Recognition using Graph Neural Networks (MP‑GCN Adaptation)
+# Group Activity Recognition using Graph Neural Networks (MP-GCN Adaptation)
 
-This repository contains my personal adaptation of the MP‑GCN model for **group activity recognition**.  
-The original model, proposed in the 2024 ECCV paper *“Skeleton‑based Group Activity Recognition via Spatial‑Temporal Panoramic Graph”*, was designed for clean, benchmark datasets.  
-Here the goal is to apply the same architecture to messy, **real‑world surveillance footage** collected from seven cameras in an outdoor playground.  
-The project is part of my portfolio and demonstrates my ability to build an end‑to‑end machine‑learning pipeline, adapt research code, and handle noisy data.
+This repository presents my portfolio adaptation of **MP-GCN** for **group activity recognition** using real-world surveillance data.
 
----
+The original MP-GCN model, introduced in the ECCV 2024 paper *“Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph”*, was developed for clean benchmark datasets. In this project, the goal was to adapt the pipeline to noisy, real-world playground footage collected from **7 surveillance cameras**.
 
-## ⚙️ My Contributions
-
-- **Data pipeline:** Constructed an automated pipeline that converts raw video files into structured skeleton data suitable for MP‑GCN.  
-  This includes running a YOLO‑based pose‑estimation model to extract human keypoints and saving them as NumPy arrays.
-- **Dataset curation:** Participated in selecting and annotating 248 video clips from seven cameras positioned around an outdoor playground.  
-  We manually labelled the original six activity classes and later collapsed them into two (``Transit`` vs ``Social``) to address class imbalance.
-- **Problem reformulation:** Adapted the classification problem from six classes to two classes because the ``Transit`` class dominated the dataset.  
-  This improved the evaluation metrics while retaining the essence of group‑activity recognition.
-- **Pre‑processing and augmentation:** Modified the original data‑generation scripts to work with the new dataset structure.  
-  Added routines for graph construction, temporal augmentation, and balancing techniques.
-
-Although the MP‑GCN architecture itself was not my invention, I integrated and tuned the model to work on this challenging dataset.
+This version is designed for portfolio review: it documents the real project, includes a small runnable demo, and preserves a clean structure without exposing the private dataset.
 
 ---
 
-## 🧪 Pipeline
+## My Contributions
 
-The following figure illustrates the end‑to‑end workflow implemented in this project.  
-It starts with raw video files and ends with an MP‑GCN model producing class predictions:
+- Built the pipeline from raw videos to structured skeleton data suitable for graph-based activity recognition
+- Extracted human keypoints using a YOLO-based pose estimation pipeline
+- Contributed to dataset curation and labeling for **248 selected clips**
+- Reformulated the original **6-class** problem into a **2-class** setting (**Transit** vs **Social**) to address class imbalance
+- Adapted preprocessing and data generation steps for compatibility with the MP-GCN workflow
 
+---
+
+## Pipeline
+
+Raw Video → Pose Estimation (YOLO) → Skeleton Extraction → Graph Construction → MP-GCN → Classification
+
+Assets illustrating the pipeline are included in [`assets/`](./assets).
+
+---
+
+## Dataset
+
+The original project used surveillance footage from **7 cameras** in an outdoor playground environment.
+
+Key characteristics:
+- **248 manually selected video clips**
+- **6 original classes**: `Transit`, `Social_People`, `Play_Object_Normal`, `Play_Object_Risk`, `Adult_Assisting`, `Negative_Contact`
+- **2 final classes** after reformulation: `Transit` and `Social`
+- Skeleton-based representation with up to **6 people per frame**
+
+Because the real dataset is private, this repository includes a **small synthetic sample dataset** under `data/raw/playground_dataset/` so the structure and demo pipeline can be inspected and executed.
+
+Additional dataset notes are available in [`docs/dataset_description.md`](./docs/dataset_description.md).
+
+---
+
+## Model
+
+- **Architecture**: MP-GCN (Graph Convolutional Network)
+- **Reference**: ECCV 2024 paper and official MP-GCN implementation
+- **This repo**: focuses on the adaptation, data pipeline, and a runnable portfolio demo
+
+> **Important:** This repository does **not** re-implement the full original MP-GCN training code.  
+> It provides a clean, honest portfolio version with a minimal demo entry point (`main.py`) and sample data.
+
+---
+
+## Results from the Team Project
+
+On the adapted playground dataset, the team project obtained:
+
+- **Top-1 Accuracy:** 76.0%
+- **Mean Per-Class Accuracy (MPCA):** 70.83%
+- **Mean Loss:** 2.02
+
+These metrics correspond to the real adapted project and are included here as project results, not as outputs of the synthetic demo dataset.
+
+---
+
+## Repository Structure
+
+```text
+group-activity-recognition-gnn/
+│
+├── README.md
+├── main.py
+├── requirements.txt
+├── .gitignore
+├── LICENSE
+│
+├── assets/
+│   ├── pipeline_diagram.png
+│   └── sample_skeleton.png
+│
+├── config/
+│   ├── mpgcn.yaml
+│   └── playground_gendata.yaml
+│
+├── data/raw/playground_dataset/
+│   ├── yolo_outputs/
+│   │   ├── video_001.npy
+│   │   ├── video_002.npy
+│   │   └── video_003.npy
+│   ├── annotations.pkl
+│   ├── annotations_raw.txt
+│   └── objects.yaml
+│
+├── docs/
+│   └── dataset_description.md
+│
+├── scripts/
+│   └── generate_dummy_dataset.py
+│
+├── results/
+│   └── demo_metrics.json
+│
+├── scripts/
+│   └── generate_dummy_dataset.py
+│
+└── src/
+    └── yolo_videos.py
 ```
-Raw Video  →  Pose Estimation (YOLO)  →  Skeleton Extraction  →  Graph Construction  →  MP‑GCN  →  Classification
+
+---
+
+## How to Run
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
 ```
 
-An image version of this pipeline can be found in the [`assets`](./assets) directory.
+### 2. (Optional) Regenerate the sample dataset
 
----
-
-## 📦 Dataset
-
-The data used in this project comes from **seven fixed surveillance cameras** covering different sections of an outdoor playground.  
-Key details:
-
-- **248 clips** manually selected and annotated.  
-- **Multi‑camera**: each clip may contain overlapping fields of view; annotation is based on the dominant view.  
-- **6 original classes**: ``Transit``, ``Social_People``, ``Play_Object_Normal``, ``Play_Object_Risk``, ``Adult_Assisting`` and ``Negative_Contact``.  
-- **2 final classes**: to mitigate severe class imbalance, we merged the five non‑transit classes into a single ``Social`` class.  
-- **Skeleton representation**: up to 6 people are detected per frame; each skeleton is represented by 2D keypoints.
-
-A more detailed description of the dataset and its challenges is provided in [`docs/dataset_description.md`](./docs/dataset_description.md).  
-
----
-
-## 🧠 Model
-
-This project uses the **MP‑GCN** architecture – a Graph Convolutional Network designed to model interactions between multiple people over time.  
-The implementation here is based on the official repository accompanying the ECCV 2024 paper.  
-I have made the necessary adjustments to ingest our skeleton data and to accommodate the reduced set of classes.
-
----
-
-## 📈 Results
-
-When trained and evaluated on the curated playground dataset, the adapted MP‑GCN model achieves the following metrics:
-
-- **Top‑1 Accuracy**: 76.0 %
-- **Mean Per‑Class Accuracy (MPCA)**: 70.83 %
-- **Mean Loss**: 2.02
-
-Note that these numbers are specific to the reduced two‑class problem and the limited 248‑video dataset.
-
----
-
-## ✨ Key Insights
-
-- **Data quality matters**: applying state‑of‑the‑art architectures to real‑world footage requires significant effort in data cleaning and labelling.  
-- **Class imbalance can dominate performance**: merging rare classes into broader categories was essential for meaningful evaluation.  
-- **Graph‑based models shine on interaction data**: MP‑GCN effectively captures interactions between individuals when provided with reliable skeletons.
-
----
-
-## 🛠️ Repository Structure
-
-```
-group‑activity‑recognition‑gnn/
-│
-├── README.md                # Project overview and usage instructions (this file)
-├── requirements.txt         # Python dependencies
-├── .gitignore               # Files and folders ignored by Git
-├── LICENSE                  # Project licence (MIT)
-│
-├── config/                  # YAML configuration files for data generation and training
-│   ├── mpgcn.yaml           # Training configuration (placeholder – customise for your setup)
-│   └── playground_gendata.yaml # Data‑generation configuration (placeholder)
-│
-├── src/                     # Source code for the data pipeline
-│   ├── yolo_videos.py       # Script to run pose estimation and save skeletons
-│   └── annotationsFormatting.ipynb # Notebook for formatting annotations (optional)
-│
-├── assets/                  # Figures and visual aids
-│   ├── pipeline_diagram.png # Visual representation of the pipeline
-│   └── sample_skeleton.png  # Example of extracted skeletons
-│
-└── docs/
-    └── dataset_description.md  # Additional notes on the dataset
+```bash
+python scripts/generate_dummy_dataset.py
 ```
 
-> **Note**: the `config` files provided here are placeholders.  
-> You should copy the original YAML files from the official MP‑GCN repository or your team’s repository and adjust them for your data paths.
+### 3. Generate processed demo data
+
+```bash
+python main.py -c config/playground_gendata.yaml --generate_data
+```
+
+### 4. Run demo training
+
+```bash
+python main.py -c config/mpgcn.yaml
+```
+
+### 5. Run demo evaluation
+
+```bash
+python main.py -c config/mpgcn.yaml --evaluate
+```
+
+The commands above run a **portfolio demo** using the synthetic sample dataset.  
+Full training on the original project requires the private dataset and the complete MP-GCN implementation.
 
 ---
 
-## 🚀 Usage
+## Why This Repository Exists
 
-1. **Install dependencies**
+This repository is meant to show:
+- my work adapting a research pipeline to real-world data
+- how I handled dataset preparation and class imbalance
+- my ability to structure an ML/CV project clearly for technical review
 
-   From the project root, install the required Python packages:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Prepare the dataset**
-
-   Follow these high‑level steps to generate the skeleton data:
-
-   ```bash
-   # 1. Run pose estimation to extract skeletons
-   python src/yolo_videos.py --input_dir path/to/raw_videos --output_dir path/to/yolo_outputs
-
-   # 2. Format annotations and generate training/validation splits
-   #    (see annotationsFormatting.ipynb for an example)
-
-   # 3. Generate graph data using the config file
-   python main.py -c config/playground_gendata.yaml --generate_data
-   ```
-
-   After running the last command, the processed data will be placed under a `data/playground` directory with `.npy` and `.pkl` files ready for training.
-
-3. **Train the model**
-
-   Once data generation is complete, train the MP‑GCN model using:
-
-   ```bash
-   python main.py -c config/mpgcn.yaml
-   ```
-
-4. **Evaluate**
-
-   To evaluate a trained model checkpoint, run:
-
-   ```bash
-   python main.py -c config/mpgcn.yaml --evaluate
-   ```
-
-Please consult the original [MP‑GCN repository](https://github.com/mgiant/MP-GCN) for more details on configuration options and advanced usage.
+It is a portfolio artifact, not a release of the original private dataset.
 
 ---
 
-## 📄 License
+## References
 
-This project is licensed under the MIT License.  See the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🔗 References
-
-- Zhengcen Li, Xinle Chang, Yueran Li, Jingyong Su. *Skeleton‑based Group Activity Recognition via Spatial‑Temporal Panoramic Graph*. ECCV 2024.  
-- Official MP‑GCN implementation: <https://github.com/mgiant/MP-GCN>
+- Zhengcen Li, Xinle Chang, Yueran Li, Jingyong Su. *Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph*. ECCV 2024.
+- Original MP-GCN implementation: <https://github.com/mgiant/MP-GCN>
