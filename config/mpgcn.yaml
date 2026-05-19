@@ -1,0 +1,17 @@
+# This is a placeholder configuration for the MP‑GCN model.
+# Copy the contents of the original MPG‑CN configuration here and adjust
+# paths and hyperparameters for your own dataset.
+
+model:
+  name: MP_GCN
+  # ... add the rest of the model parameters here
+
+training:
+  batch_size: 32
+  epochs: 100
+  # ... add other training parameters (optimizer, scheduler, etc.)
+
+data:
+  data_path: /path/to/your/data/playground
+  num_classes: 2
+  # ... additional data settings
