@@ -1,14 +1,18 @@
-# Group Activity Recognition using Graph Neural Networks (MP-GCN Adaptation)
+# 🧠 Group Activity Recognition using Graph Neural Networks (MP-GCN Adaptation)
+
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Portfolio-lightgrey)
 
 This repository presents my portfolio adaptation of **MP-GCN** for **group activity recognition** using real-world surveillance data.
 
-The original MP-GCN model, introduced in the ECCV 2024 paper *“Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph”*, was developed for clean benchmark datasets. In this project, the goal was to adapt the pipeline to noisy, real-world playground footage collected from **7 surveillance cameras**.
+The original MP-GCN model, introduced in the ECCV 2024 paper *"Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph"*, was developed for clean benchmark datasets. In this project, the goal was to adapt the pipeline to noisy, real-world playground footage collected from **7 surveillance cameras**.
 
 This version is designed for portfolio review: it documents the real project, includes a small runnable demo, and preserves a clean structure without exposing the private dataset.
 
 ---
 
-## My Contributions
+## ⚙️ My Contributions
 
 - Built the pipeline from raw videos to structured skeleton data suitable for graph-based activity recognition
 - Extracted human keypoints using a YOLO-based pose estimation pipeline
@@ -18,15 +22,14 @@ This version is designed for portfolio review: it documents the real project, in
 
 ---
 
-## Pipeline
-
+## 🔄 Pipeline
 Raw Video → Pose Estimation (YOLO) → Skeleton Extraction → Graph Construction → MP-GCN → Classification
 
 Assets illustrating the pipeline are included in [`assets/`](./assets).
 
 ---
 
-## Dataset
+## 📦 Dataset
 
 The original project used surveillance footage from **7 cameras** in an outdoor playground environment.
 
@@ -42,7 +45,7 @@ Additional dataset notes are available in [`docs/dataset_description.md`](./docs
 
 ---
 
-## Model
+## 🤖 Model
 
 - **Architecture**: MP-GCN (Graph Convolutional Network)
 - **Reference**: ECCV 2024 paper and official MP-GCN implementation
@@ -53,7 +56,7 @@ Additional dataset notes are available in [`docs/dataset_description.md`](./docs
 
 ---
 
-## Results from the Team Project
+## 📈 Results from the Team Project
 
 On the adapted playground dataset, the team project obtained:
 
@@ -65,7 +68,7 @@ These metrics correspond to the real adapted project and are included here as pr
 
 ---
 
-## Repository Structure
+## 🗂️ Repository Structure
 
 ```text
 group-activity-recognition-gnn/
@@ -96,9 +99,6 @@ group-activity-recognition-gnn/
 ├── docs/
 │   └── dataset_description.md
 │
-├── scripts/
-│   └── generate_dummy_dataset.py
-│
 ├── results/
 │   └── demo_metrics.json
 │
@@ -111,7 +111,7 @@ group-activity-recognition-gnn/
 
 ---
 
-## How to Run
+## 🚀 How to Run
 
 ### 1. Install dependencies
 
@@ -148,7 +148,7 @@ Full training on the original project requires the private dataset and the compl
 
 ---
 
-## Why This Repository Exists
+## 💡 Why This Repository Exists
 
 This repository is meant to show:
 - my work adapting a research pipeline to real-world data
@@ -159,7 +159,7 @@ It is a portfolio artifact, not a release of the original private dataset.
 
 ---
 
-## References
+## 🔗 References
 
 - Zhengcen Li, Xinle Chang, Yueran Li, Jingyong Su. *Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph*. ECCV 2024.
 - Original MP-GCN implementation: <https://github.com/mgiant/MP-GCN>
