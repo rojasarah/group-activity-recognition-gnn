@@ -1,3 +1,0 @@
-video_001.mp4 Transit
-video_002.mp4 Social_People
-video_003.mp4 Play_Object_Normal
